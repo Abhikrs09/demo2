@@ -1,85 +1,99 @@
-import { Page } from "@playwright/test";
+import { Page } from '@playwright/test';
 
-export default class Radio_button_demo_page{
+export default class RadioButtonDemoPage {
+  constructor(public page: Page) {}
 
-    constructor(public page : Page){}
+  // Locators
+  private maleRadioButtonLabel = { label: 'Male' };
+  private getSelectedValueButton = { name: 'Get value', exact: true };
+  private resultText = { text: "Radio button 'Male' is checked" };
+  private disabledRadioButtonLabel = { xpath: "//label[text()='Disabled Radio Button']" };
+  private radioButton1 = { xpath : "//label[text()='Radio Button 1']" };
+  private genderRadioButtons = { text: /^Gender : MaleFemaleOther$/ };
+  private ageRadioButtonLabel = { label: '15 to 50' };
+  private getGenderAgeValueButton = { name: 'Get values' };
+  private genderResult = { text: 'Gender :' };
+  private ageResult = { text: 'Age :' };
+  private getValues = {xpath: "//button[text()='Get values']"};
 
-    async btn_get_selected_value(){
-        await this.page.getByLabel('Male').first().check();
+  // Functions
+  async selectMaleRadioButton() {
+    await this.page.getByLabel(this.maleRadioButtonLabel.label).first().check();
+  }
 
-    }
+  async isMaleRadioButtonSelected() {
+    const isSelected = await this.page.getByLabel(this.maleRadioButtonLabel.label).first().isChecked();
+    return isSelected;
+  }
 
-    async verify_isSelected_radio_btn(){
+  async clickGetValueButton() {
+    await this.page.getByRole('button', { name: this.getSelectedValueButton.name, exact: true }).click();
+  }
 
-        const is_clicked = await this.page.getByLabel('Male').first().isChecked();
-        return is_clicked;
-    }
+  async getSelectedValueText() {
+    const element = await this.page.getByText(this.resultText.text);
+    const extractedText = await element.innerText();
+    return extractedText;
+  }
 
+  async isRadioButtonDisabled() {
+    const element = await this.page.locator(this.disabledRadioButtonLabel.xpath).isEnabled();
+    return  element;
+  }
 
-    async btn_get_value(){
-        await this.page.getByRole('button', { name: 'Get value', exact: true }).click();
-    }
+  async enableRadioButton() {
+    const radioButtonElement = await this.page.locator(this.radioButton1.xpath);
+    await radioButtonElement.click();
+  }
 
+//   async clickGetValuesButton() {
+//     const getValuesElement = await this.page.locator(this.getValues.xpath);
+//     await getValuesElement.click();
+//   }
 
-    async verify_get_selected_value(){
-
-        const element = await this.page.getByText('Radio button \'Male\' is checked').innerText();
-        return element;
-    }
-
-
-    async btn_disable_radioButton(): Promise<boolean>{
-
-        const element = await this.page.locator('//label[text()="Disabled Radio Button"]').isDisabled();
-        return element
-        
-    }
-
-     
-    async btn_enable_radioButton(){
-        const btn_disable = await this.page.getByText('Checkbox 1').check();
-        return btn_disable;
-    }
-
-    async verify_btn_enable_radioButton(){
-        const btn_disable = await this.page.getByText('Checkbox 1').isEnabled();
-        return btn_disable;
-    }
+  async isRadioButtonEnabled() {
+    const radioButtonElement = await this.page.locator(this.radioButton1.xpath);
+  return await radioButtonElement.isDisabled();
+  }
 
 
-    async btn_gender(){
-        await this.page.locator('div').filter({ hasText: /^Gender : MaleFemaleOther$/ }).getByLabel('Male', { exact: true }).check();
-    }
 
-    async btn_age(){
-        await this.page.getByLabel('15 to 50').check();
-    
-    }
 
-    async btn_get_gender_age_value(){
+  async selectGenderMaleAndAge() {
+    await this.page.locator('div').filter({ hasText: this.genderRadioButtons.text }).getByLabel(this.maleRadioButtonLabel.label, { exact: true }).check();
+    await this.page.getByLabel(this.ageRadioButtonLabel.label).check();
+  }
 
-        await this.page.getByRole('button', { name: 'Get values' }).click();
-    }
+  async clickGetGenderAgeValueButton() {
+    await this.page.getByRole('button', { name: this.getGenderAgeValueButton.name }).click();
+  }
 
-    async verify_gender_value(){
-        const element = await this.page.locator('p').filter({ hasText: 'Gender :' });
-        const extractedText = await element.innerText();
-        return extractedText;
-    }
+  
 
-    async verify_age_value(){
-        const element = await this.page.locator('p').filter({ hasText: 'Age :' });
-        const extractedText = await element.innerText();
-        return extractedText;
+  async getGenderValueText() {
+    const element = await this.page.locator('p').filter({ hasText: this.genderResult.text });
+    const extractedText = await element.innerText();
+    return extractedText;
+  }
 
-    }
+  async getAgeValueText() {
+    const element = await this.page.locator('p').filter({ hasText: this.ageResult.text });
+    const extractedText = await element.innerText();
+    return extractedText;
+  }
 
-    async rdbtn_gender_age(){
-        
-        await this.btn_gender();
-        await this.btn_age();
-        await this.btn_get_gender_age_value()
-    }
+  async performGenderAgeRadioButtonDemo() {
+    await this.selectGenderMaleAndAge();
+    await this.clickGetGenderAgeValueButton();
+    await this.clickGetValueButton();
 
+  }
+
+  async scrollToPosition(y: number) {
+    await this.page.evaluate((scrollY) => {
+      window.scrollTo(0, scrollY);
+    }, y);
+  }
+  
 
 }

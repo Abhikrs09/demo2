@@ -1,7 +1,11 @@
 import { Page, expect } from '@playwright/test';
 
 export default class DragAndDropSliderPage {
-  constructor(public page: Page) {}
+  constructor(public page: Page) {
+    this.page=page
+  }
+
+  private simpleDemoFormLink = { name: 'Simple Form Demo' };
 
   async waitForSliderToBeVisible() {
     const verifySlider = await this.page.locator('#slider1').getByRole('slider').isVisible();
