@@ -7,6 +7,7 @@ export default class CheckBoxPage {
         this.page = page;
     }
 
+    private title = "//h1[text()='Checkbox Demo']";
     private ckb1="//label[text()='Click on check box']";
     private ckb1IsClicked = "//div[text()='Checked']";
     private ckb2="(//input[@class='mr-10'])[2]";
@@ -16,10 +17,10 @@ export default class CheckBoxPage {
     private ckb7="(//label[text()='Option 4'])[2]";
     private dckb1 = "//body[1]/div[1]/div[1]/section[2]/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]";
     private selectAll = { name: 'Check All' };
+    private unSelectAll = { name: 'Uncheck All' };
 
-    async isTitleDisplayed(){
-        const displayed = await this.page.getByRole('heading', { name: 'Checkbox Demo' }).isVisible();
-        return displayed;
+    async istitleIsDispalyed(){
+        return await this.page.isVisible(this.title);
     }
 
     async clickckb1btn(){
@@ -35,7 +36,7 @@ export default class CheckBoxPage {
     }
 
     async isclickOnCheckBoxckb1Displayed(){
-        return await this.page.isVisible(this.ckb1IsClicked);
+        return await this.page.innerText(this.title);
     }
 
     async isCkb2disable1Displayed(){
@@ -58,5 +59,11 @@ export default class CheckBoxPage {
         await this.page.getByRole('button',this.selectAll).click();
     }
 
-    
+    async clickUnSelectAll(){
+        await this.page.getByRole('button', this.unSelectAll).click();
+    }
+    async ckb5IsEnable(){
+        return await this.page.isChecked(this.ckb5);
+    }
+
 }

@@ -2,18 +2,23 @@ import { Page } from "@playwright/test";
 
 export default class DropdownDemo{
 
-    constructor(public page : Page){
+    private page: Page;
+
+    constructor(page: Page) {
         this.page = page;
     }
 
+    private title = "//h1[text()='Dropdown Demo']";
+    private dropDown1 = '#select-demo';
+
+
     async verify_dropdown_page_titile(){
-        const verify_page = await this.page.locator("//h1[text()='Dropdown Demo']").innerText();
+        const verify_page = await this.page.innerText(this.title);
         return verify_page;
     }
 
     async select_single_option( day : string){
-        const element = '#select-demo';
-        await this.page.selectOption(element, day);
+        await this.page.selectOption(this.dropDown1, day);
     }
 
     async verify_single_option( ){
