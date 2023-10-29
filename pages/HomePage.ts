@@ -58,7 +58,8 @@ export default class HomePage {
   //--------------------------------------------
   async scrollToPosition(y: number) {
     await this.page.evaluate((scrollY) => {
-      window.scrollTo(0, scrollY);
+        window.scrollBy(0, scrollY);
     }, y);
-  }
+}
+
 }
