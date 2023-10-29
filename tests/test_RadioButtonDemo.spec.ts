@@ -40,7 +40,7 @@ test('008 Click on button to get the selected values from Gender and Age.', asyn
 
   // Wait for the page to reach a stable network idle state before proceeding with further actions in the test.
   await page.waitForLoadState('networkidle');
-  await radioButtonDemoPage.scrollToPosition(75);
+  await homePage.scrollToPosition(75);
   await radioButtonDemoPage.selectGenderMaleAndAge();
 
   // Comparing the value that will come when you click that radio button.

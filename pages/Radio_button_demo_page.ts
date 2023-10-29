@@ -46,10 +46,10 @@ export default class RadioButtonDemoPage {
     await radioButtonElement.click();
   }
 
-//   async clickGetValuesButton() {
-//     const getValuesElement = await this.page.locator(this.getValues.xpath);
-//     await getValuesElement.click();
-//   }
+  async clickGetValuesButton() {
+    const getValuesElement = await this.page.locator(this.getValues.xpath);
+    await getValuesElement.click();
+  }
 
   async isRadioButtonEnabled() {
     const radioButtonElement = await this.page.locator(this.radioButton1.xpath);

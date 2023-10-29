@@ -28,10 +28,10 @@ export default class DropdownDemo{
 
         }
     }
-
+   // page.waitForSelector("//p[@class='selected-value text-size-14']")
 
     async dayDisplayed(){
-        const displayedDay = (await this.page.waitForSelector("//p[@class='selected-value text-size-14']")).innerText();
+        const displayedDay = (await this.page.locator("//p[@class='selected-value text-size-14']")).innerText();
         return displayedDay;
     }
 

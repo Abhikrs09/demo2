@@ -15,8 +15,15 @@ export default class HomePage {
   private dragAndDropLink = { name: 'Drag and Drop' };
   private windowPopupModalLink = { name: 'Window Popup Modal' };
   private dragAndDropSlidersLink = { name: 'Drag & Drop Sliders' };
+  private checkboxDemoLink = { name: 'Checkbox Demo'};
 
   // Functions
+
+  async clickCheckboxDempLink(){
+    await this.page.getByRole('link', this.checkboxDemoLink).click();
+  }
+
+
   async clickSimpleDemoForm() {
     await this.page.getByRole('link', this.simpleDemoFormLink).click();
   }
@@ -43,5 +50,15 @@ export default class HomePage {
 
   async clickDragAndDropSliders() {
     await this.page.getByRole('link', this.dragAndDropSlidersLink).click();
+  }
+
+
+
+
+  //--------------------------------------------
+  async scrollToPosition(y: number) {
+    await this.page.evaluate((scrollY) => {
+      window.scrollTo(0, scrollY);
+    }, y);
   }
 }

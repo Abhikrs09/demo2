@@ -8,7 +8,7 @@ import Radio_button_demo_page from '../pages/Radio_button_demo_page';
 import SimpPageDemo from '../pages/SimpPageDemo_page';
 import Window_Popup_Model_page from '../pages/Window_Popup_Model_page';
 import DragAndDropSliderPage from "../pages/DragAndDropSlider";
-
+import CheckBoxPage from "../pages/CheckBoxPage";
 
 type pages ={
     homePage : HomePage;
@@ -18,11 +18,16 @@ type pages ={
     radioButtonDemoPage : Radio_button_demo_page;
     simpPageDemo : SimpPageDemo;
     windowPopupModelPage : Window_Popup_Model_page;
-    dragAndDropSliderPage : DragAndDropSliderPage
+    dragAndDropSliderPage : DragAndDropSliderPage;
+    checkBoxPage:CheckBoxPage;
 }
 
 
 const testPages = baseTest.extend<pages>({
+
+    checkBoxPage:async({page},use) =>{
+        await use(new CheckBoxPage(page));
+    },
 
     homePage : async ({page},use) =>{
         await use(new HomePage(page));
